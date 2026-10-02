@@ -148,34 +148,34 @@ export default function ApplyPage() {
     const courseLabels: Record<string, string> = { "1": "1ro Medio", "2": "2do Medio", "3": "3ro Medio", "4": "4to Medio" };
 
     const payload = new URLSearchParams({
-      "entry.781459710": formValues.name || "",
-      "entry.1187180142": formValues.age || "",
-      "entry.1705219438": formValues.school || "",
-      "entry.1455852837": courseLabels[formValues.course] || "",
-      "entry.1436178938": formValues.region || "",
-      "entry.1625050353": formValues.comuna || "",
-      "entry.159407556": formValues.email || "",
-      "entry.779351655": formValues.phone || "",
-      "entry.1869493394": formValues.gender || "",
-      "entry.634755484": formValues.tiempo_libre || "",
-      "entry.935512835": formValues.future_interest || "",
-      "entry.1679683040": formValues.curiosity_topic || "",
-      "entry.920754456": hasLiderado,
-      "entry.1920943622": hasLiderado === "Sí" ? formValues.actividades_desc?.trim() || "" : "",
-      "entry.1862178203": familySupport,
-      "entry.182877332": attendance,
-      "entry.1838260082": paymentCapacity,
-      "entry.804024667": formValues.community_problem || "",
-      "entry.1963440088": selectedTraits.includes("Otro") ? formValues.trait_other || "" : "",
-      "entry.169260751": formValues.team_role || "",
-      "entry.161688947": formValues.admired_person || "",
-      "entry.1085691853": formValues.ref_1 || "",
-      "entry.321074777": formValues.ref_2 || "",
-      "entry.413881830": "Acepto que mis datos sean enviados y utilizados exclusivamente para analizar mi postulación a la convocatoria de The Builders Camp. Mis datos no serán compartidos con terceros ni descargados por ningún motivo."
+      name: formValues.name || "",
+      age: formValues.age || "",
+      school: formValues.school || "",
+      course: courseLabels[formValues.course] || "",
+      region: formValues.region || "",
+      comuna: formValues.comuna || "",
+      email: formValues.email || "",
+      phone: formValues.phone || "",
+      gender: formValues.gender || "",
+      tiempo_libre: formValues.tiempo_libre || "",
+      future_interest: formValues.future_interest || "",
+      curiosity_topic: formValues.curiosity_topic || "",
+      has_liderado: hasLiderado,
+      actividades_desc: hasLiderado === "Sí" ? formValues.actividades_desc?.trim() || "" : "",
+      family_support: familySupport,
+      attendance,
+      payment_capacity: paymentCapacity,
+      community_problem: formValues.community_problem || "",
+      trait_other: selectedTraits.includes("Otro") ? formValues.trait_other || "" : "",
+      team_role: formValues.team_role || "",
+      admired_person: formValues.admired_person || "",
+      ref_1: formValues.ref_1 || "",
+      ref_2: formValues.ref_2 || "",
+      consent: "Acepto"
     });
 
-    selectedAreas.forEach(value => payload.append("entry.2096164779", value));
-    selectedTraits.forEach(value => payload.append("entry.1447882457", value));
+    selectedAreas.forEach(value => payload.append("areas", value));
+    selectedTraits.forEach(value => payload.append("traits", value));
     setIsSubmitting(true);
     setSubmitError("");
     try {
@@ -184,7 +184,7 @@ export default function ApplyPage() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString(),
       });
-      if (!response.ok) throw new Error("Google Forms rechazó el envío");
+      if (!response.ok) throw new Error("No fue posible registrar la postulación");
       setSubmitted(true);
     } catch {
       setSubmitError("No pudimos enviar tu postulación. Revisa tu conexión e inténtalo nuevamente.");
