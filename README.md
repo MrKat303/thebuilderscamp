@@ -38,8 +38,8 @@ Incluye:
 ### Instalación
 
 ```bash
-git clone https://github.com/MrKat303/Leaders-of-Tomorrow.git
-cd Leaders-of-Tomorrow
+git clone https://github.com/MrKat303/thebuilderscamp.git
+cd thebuilderscamp
 npm install
 ```
 
