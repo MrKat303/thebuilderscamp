@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Builders Camp by HiveYoung
 
-## Getting Started
+Landing page oficial de **The Builders Camp**, una iniciativa de [HiveYoung](https://hiveyoung.org/) para estudiantes de enseñanza media que quieren aprender, crear y desarrollar las habilidades del futuro.
 
-First, run the development server:
+The Builders Camp es una experiencia intensiva de cinco días en la que jóvenes exploran tecnología, creatividad, liderazgo y emprendimiento mediante talleres, desafíos reales y trabajo en equipo.
+
+## Sobre el sitio
+
+La landing presenta la propuesta del programa y acompaña a cada postulante desde el descubrimiento de la experiencia hasta el envío de su postulación.
+
+Incluye:
+
+- Presentación del programa y su propósito.
+- Información sobre la experiencia, metodología y actividades.
+- Sección de preguntas frecuentes.
+- Diseño responsivo para escritorio y dispositivos móviles.
+- Animaciones e interacciones visuales.
+- Formulario de postulación por etapas.
+- Envío seguro de postulaciones mediante una ruta interna del servidor.
+- Metadatos SEO, Open Graph, sitemap y robots.
+
+## Tecnologías
+
+- [Next.js 16](https://nextjs.org/) con App Router.
+- [React 19](https://react.dev/).
+- [TypeScript](https://www.typescriptlang.org/).
+- [GSAP](https://gsap.com/) para animaciones.
+- [Lenis](https://lenis.darkroom.engineering/) para desplazamiento suave.
+- CSS y recursos gráficos personalizados.
+
+## Desarrollo local
+
+### Requisitos
+
+- Node.js 20 o superior.
+- npm, pnpm, yarn o Bun.
+
+### Instalación
+
+```bash
+git clone https://github.com/MrKat303/Leaders-of-Tomorrow.git
+cd Leaders-of-Tomorrow
+npm install
+```
+
+### Ejecución
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Luego abre [http://localhost:3000](http://localhost:3000) en el navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Comandos disponibles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev      # Inicia el entorno de desarrollo
+npm run build    # Genera la versión de producción
+npm run start    # Ejecuta la versión de producción
+npm run lint     # Revisa la calidad del código
+```
 
-## Learn More
+## Estructura principal
 
-To learn more about Next.js, take a look at the following resources:
+```text
+app/
+├── api/apply/       # Recepción y reenvío de postulaciones
+├── apply/           # Formulario de postulación
+├── components/      # Componentes compartidos
+├── layout.tsx       # Layout, metadatos y datos estructurados
+└── page.tsx         # Landing page principal
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+public/              # Imágenes, logotipos y recursos estáticos
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Despliegue
 
-## Deploy on Vercel
+El proyecto puede desplegarse en cualquier plataforma compatible con Next.js. Para producción, genera primero una compilación optimizada con `npm run build`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Desarrollado para **The Builders Camp by HiveYoung**.

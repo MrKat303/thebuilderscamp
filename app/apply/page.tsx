@@ -29,8 +29,8 @@ const mobileStyles = `
       font-size: 0.9rem !important;
     }
     .apply-nav-btn {
-      padding: 0.72rem 1rem !important;
-      font-size: 0.88rem !important;
+      padding: 0.58rem 1rem !important;
+      font-size: 0.84rem !important;
       min-width: 0 !important;
     }
   }
@@ -46,75 +46,11 @@ const c = {
   forest: "#43a574",
 };
 
-const step3Questions = [
-  {
-    id: "q1",
-    q: "Tienes una idea que te entusiasma mucho, pero cuando se la muestras a otras personas, no genera la reacción que esperabas. ¿Qué haces?",
-    options: [
-      "Intento explicarla de otra manera antes de cambiarla.",
-      "Les pregunto qué no les convence e intento entender sus razones.",
-      "Pruebo una versión pequeña de la idea para ver cómo funciona en la práctica.",
-      "La dejo por un momento y exploro otras alternativas."
-    ]
-  },
-  {
-    id: "q2",
-    q: "Están avanzando en un proyecto y una persona del equipo propone cambiar una parte importante cuando ya queda poco tiempo. Su argumento te parece interesante. ¿Qué harías?",
-    options: [
-      "Mantendría el plan original porque cambiar ahora puede poner en riesgo el resultado.",
-      "Le pediría que explique qué ganaríamos con el cambio antes de decidir.",
-      "Probaría rápidamente el cambio en una parte pequeña del proyecto.",
-      "Apoyaría el cambio si creo que puede mejorar significativamente el resultado."
-    ]
-  },
-  {
-    id: "q3",
-    q: "Te asignan una tarea importante para el proyecto y, después de empezar, te das cuenta de que no sabes bien cómo resolverla. ¿Qué haces primero?",
-    options: [
-      "Investigo por mi cuenta hasta encontrar una forma de avanzar.",
-      "Le pregunto a alguien que tenga más experiencia.",
-      "Pruebo distintas formas de resolverla y aprendo a partir de los resultados.",
-      "Se lo comunico al equipo para decidir juntos cómo abordarla."
-    ]
-  },
-  {
-    id: "q4",
-    q: "Tu equipo debe presentar frente a muchas personas. Quien iba a exponer se pone muy nervioso/a minutos antes y dice que no sabe si podrá hacerlo. ¿Qué haces?",
-    options: [
-      "Me ofrezco a presentar en su lugar para asegurar que el equipo pueda continuar.",
-      "Le propongo presentar juntos y dividirnos las partes.",
-      "Intento tranquilizarlo/a y mantener el plan original.",
-      "Reorganizo rápidamente la presentación entre varias personas del equipo."
-    ]
-  },
-  {
-    id: "q5",
-    q: "Una persona de tu equipo propone muchas ideas y habla gran parte del tiempo. Sus aportes son buenos, pero notas que los demás casi no están participando. ¿Qué haces?",
-    options: [
-      "No intervengo mientras sus ideas sigan ayudando al proyecto.",
-      "Intento abrir la conversación preguntando directamente qué piensan los demás.",
-      "Hablo después con esa persona y le comento lo que estoy observando.",
-      "Propongo una dinámica donde todos tengan un espacio para plantear ideas."
-    ]
-  },
-  {
-    id: "q6",
-    q: "Después de trabajar varias horas en una idea, un mentor les dice que el problema que están resolviendo probablemente no es tan relevante como creen. ¿Qué haces?",
-    options: [
-      "Le pregunto qué observó para llegar a esa conclusión.",
-      "Defiendo la idea explicando la evidencia que tenemos.",
-      "Busco más información antes de decidir si debemos cambiar.",
-      "Propongo explorar rápidamente otro problema para compararlo con el actual."
-    ]
-  }
-];
-
 export default function ApplyPage() {
   const container = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [hasLiderado, setHasLiderado] = useState<string>("");
-  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const [familySupport, setFamilySupport] = useState("");
   const [attendance, setAttendance] = useState("");
@@ -125,7 +61,7 @@ export default function ApplyPage() {
   const [submitError, setSubmitError] = useState("");
   const cardRef = useRef<HTMLDivElement>(null);
   
-  const totalSteps = 5;
+  const totalSteps = 4;
 
   const toggleArea = (area: string) => {
     setSelectedAreas(prev => 
@@ -141,10 +77,6 @@ export default function ApplyPage() {
           ? [...current, trait]
           : current
     );
-  };
-
-  const handleOptionChange = (qId: string, value: string) => {
-    setAnswers(prev => ({ ...prev, [qId]: value }));
   };
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -180,15 +112,6 @@ export default function ApplyPage() {
       return;
     }
     
-    // Quick validation for the challenge section
-    if (step === 4) {
-      const unanswered = step3Questions.some(q => !answers[q.id]);
-      if (unanswered) {
-        alert("Por favor, responde todas las preguntas antes de continuar.");
-        return;
-      }
-    }
-
     gsap.to(".step-content", {
       x: -20,
       opacity: 0,
@@ -222,10 +145,6 @@ export default function ApplyPage() {
       return;
     }
 
-    const challengeEntries = [
-      "entry.258710818", "entry.385088841", "entry.1074730730",
-      "entry.53236873", "entry.1105933179", "entry.409478847"
-    ];
     const courseLabels: Record<string, string> = { "1": "1ro Medio", "2": "2do Medio", "3": "3ro Medio", "4": "4to Medio" };
 
     const payload = new URLSearchParams({
@@ -257,10 +176,6 @@ export default function ApplyPage() {
 
     selectedAreas.forEach(value => payload.append("entry.2096164779", value));
     selectedTraits.forEach(value => payload.append("entry.1447882457", value));
-    step3Questions.forEach((question, index) =>
-      payload.set(challengeEntries[index], answers[question.id] || "")
-    );
-
     setIsSubmitting(true);
     setSubmitError("");
     try {
@@ -343,8 +258,7 @@ export default function ApplyPage() {
     "1. Datos personales",
     "2. Intereses, experiencia y disponibilidad",
     "3. Tu lado Builder",
-    "4. Cómo tomas decisiones",
-    "5. Reflexión"
+    "4. Reflexión"
   ];
 
   return (
@@ -710,41 +624,8 @@ export default function ApplyPage() {
                     </section>
                 )}
 
-                {/* STEP 4: SITUACIONES DE DESAFIO */}
+                {/* STEP 4: REFLEXION */}
                 {step === 4 && (
-                  <div style={{ display: "grid", gap: "2.5rem" }}>
-                    {step3Questions.map((q, idx) => (
-                      <div key={q.id} style={{ background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
-                        <p style={{ color: "white", fontSize: "1rem", fontWeight: 600, marginBottom: "1.2rem", lineHeight: 1.5 }}>
-                          {idx + 1}. {q.q}
-                        </p>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-                          {q.options.map((opt, optIdx) => (
-                            <label key={optIdx} className="apply-option-label" style={{ 
-                              display: "flex", alignItems: "flex-start", gap: "0.8rem", cursor: "pointer", 
-                              padding: "0.8rem 1rem", background: answers[q.id] === opt ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", 
-                              borderRadius: "10px", border: answers[q.id] === opt ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent",
-                              transition: "all 0.2s"
-                            }}>
-                              <input 
-                                type="radio" 
-                                name={q.id} 
-                                value={opt} 
-                                checked={answers[q.id] === opt} 
-                                onChange={(e) => handleOptionChange(q.id, e.target.value)}
-                                style={{ accentColor: c.orange, width: "18px", height: "18px", marginTop: "2px", flexShrink: 0 }} 
-                              />
-                              <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.95rem", lineHeight: 1.4 }}>{opt}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* STEP 5: REFLEXION */}
-                {step === 5 && (
                   <div style={{ display: "grid", gap: "2rem" }}>
                     <div>
                       <label htmlFor="ref_1" style={labelStyle}>¿Por qué quieres ser parte de The Builders Camp? Cuéntanos en tus propias palabras. *</label>
@@ -787,8 +668,8 @@ export default function ApplyPage() {
                   <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "2.5rem" }}>
                     {step > 1 && (
                       <button className="apply-nav-btn" type="button" onClick={prevStep} style={{ 
-                        background: "rgba(255,255,255,0.08)", color: "white", padding: "0.8rem 1.35rem", 
-                        borderRadius: "14px", border: "1px solid rgba(255,255,255,0.1)", fontWeight: 700, cursor: "pointer",
+                        background: "rgba(255,255,255,0.08)", color: "white", padding: "0.62rem 1.15rem",
+                        borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", fontWeight: 600, fontSize: "0.88rem", cursor: "pointer",
                         transition: "all 0.2s"
                       }} onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.15)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}>
                         Atrás
@@ -796,9 +677,9 @@ export default function ApplyPage() {
                     )}
                     
                     <button className="apply-nav-btn" type="submit" disabled={isSubmitting} style={{ 
-                      background: c.orange, color: "white", padding: "0.8rem 1.5rem", minWidth: "170px",
-                      borderRadius: "14px", border: "none", fontWeight: 700, cursor: "pointer",
-                      boxShadow: "0 4px 15px rgba(139, 92, 246, 0.4)", transition: "all 0.2s",
+                      background: c.orange, color: "white", padding: "0.62rem 1.25rem", minWidth: "145px",
+                      borderRadius: "10px", border: "1px solid rgba(255,255,255,0.14)", fontWeight: 600, fontSize: "0.88rem", cursor: "pointer",
+                      boxShadow: "0 2px 8px rgba(139, 92, 246, 0.3)", transition: "all 0.2s",
                       opacity: isSubmitting ? 0.65 : 1
                     }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
                       {step < totalSteps ? "Continuar" : isSubmitting ? "Enviando..." : "Finalizar postulación"}
