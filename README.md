@@ -16,7 +16,7 @@ Incluye:
 - Diseño responsivo para escritorio y dispositivos móviles.
 - Animaciones e interacciones visuales.
 - Formulario de postulación por etapas.
-- Envío seguro de postulaciones mediante una ruta interna del servidor.
+- Envío seguro de postulaciones mediante una ruta interna y Google Apps Script.
 - Metadatos SEO, Open Graph, sitemap y robots.
 
 ## Tecnologías
@@ -71,7 +71,19 @@ app/
 └── page.tsx         # Landing page principal
 
 public/              # Imágenes, logotipos y recursos estáticos
+google-apps-script/  # Script que crea el formulario y recibe postulaciones
 ```
+
+## Integración de postulaciones
+
+El archivo `google-apps-script/Code.gs` contiene la definición del Google Form y el endpoint que registra cada postulación. La aplicación se conecta al despliegue mediante estas variables de entorno:
+
+```bash
+GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/DEPLOYMENT_ID/exec
+GOOGLE_APPS_SCRIPT_TOKEN=token-privado-de-integracion
+```
+
+Puedes usar `env.example` como referencia. Nunca publiques el token real en el repositorio.
 
 ## Despliegue
 
