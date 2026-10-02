@@ -826,19 +826,19 @@ export default function Home() {
       {/* ═══════════════════ CTA ═══════════════════ */}
       <section className="cta-section" style={{
         minHeight: "clamp(480px, 68svh, 680px)", padding: "0 1rem clamp(2rem, 4vw, 3.5rem)",
-        backgroundColor: "transparent", position: "relative", overflow: "hidden",
+        backgroundColor: "transparent", position: "relative", overflow: "visible",
         display: "flex", alignItems: "center", justifyContent: "center",
       }}>
         <div className="cta-bg" aria-hidden="true" style={{
-          position: "absolute", inset: 0,
+          position: "absolute", inset: "clamp(-220px, -16vw, -130px) 0 0",
           backgroundImage: "url('/footer-journey.png')", backgroundSize: "cover",
           backgroundPosition: "center bottom", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.65) 9%, #000 22%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.65) 9%, #000 22%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.03) 18%, rgba(0,0,0,0.16) 30%, rgba(0,0,0,0.45) 43%, rgba(0,0,0,0.78) 56%, #000 68%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.03) 18%, rgba(0,0,0,0.16) 30%, rgba(0,0,0,0.45) 43%, rgba(0,0,0,0.78) 56%, #000 68%)",
         }} />
         <div aria-hidden="true" style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, transparent 0%, rgba(39, 12, 75, 0.12) 24%, rgba(24, 8, 43, 0.66) 100%)",
+          position: "absolute", inset: "clamp(-220px, -16vw, -130px) 0 0",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(39, 12, 75, 0.03) 30%, rgba(39, 12, 75, 0.16) 52%, rgba(24, 8, 43, 0.66) 100%)",
         }} />
         <div className="cta-section-inner" style={{
           maxWidth: 1100, margin: "0 auto", zIndex: 1,
