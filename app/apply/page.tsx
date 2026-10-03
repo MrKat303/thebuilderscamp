@@ -7,6 +7,39 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const mobileStyles = `
+  .apply-start-btn {
+    min-width: 148px;
+    min-height: 42px;
+    margin-top: 2rem;
+    padding: 0.62rem 1.25rem;
+    border: 0.75px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .apply-start-btn:hover {
+    background: rgba(255, 255, 255, 0.17);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .apply-start-btn:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .apply-start-btn:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.72);
+    outline-offset: 3px;
+  }
   @media (max-width: 600px) {
     .apply-grid-2 {
       grid-template-columns: 1fr !important;
@@ -330,11 +363,7 @@ export default function ApplyPage() {
                       <p>Los postulantes seleccionados serán contactados directamente por WhatsApp con los próximos pasos.</p>
                     </div>
                     
-                    <button type="button" onClick={nextStep} style={{ 
-                      marginTop: "2.5rem", width: "100%", maxWidth: "300px", background: c.orange, color: "white", padding: "1.1rem", 
-                      borderRadius: "14px", border: "none", fontWeight: 800, fontSize: "1.1rem", cursor: "pointer",
-                      boxShadow: "0 4px 15px rgba(139, 92, 246, 0.4)", transition: "all 0.2s"
-                    }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
+                    <button type="button" onClick={nextStep} className="apply-start-btn">
                       Empezar
                     </button>
                   </div>
