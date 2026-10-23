@@ -579,10 +579,10 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label style={labelStyle}>The Builders Camp tiene un costo de participación de $60.000. En caso de ser seleccionado/a, ¿cuál de estas opciones describe mejor tu situación? *</label>
+                      <label style={labelStyle}>The Builders Camp tiene un costo de participación de $20.000. En caso de ser seleccionado/a, ¿cuál de estas opciones describe mejor tu situación? *</label>
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem", marginTop: "0.5rem" }}>
                         {[
-                          "Podría cubrir el costo total de $60.000.",
+                          "Podría cubrir el costo total de $20.000.",
                           "Podría cubrir una parte del costo.",
                           "Necesitaría una beca para poder participar.",
                         ].map((option) => (

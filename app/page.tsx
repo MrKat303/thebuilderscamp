@@ -50,7 +50,7 @@ export default function Home() {
     { q: "¿Qué es The Builders Camp?", a: "Un bootcamp intensivo de 5 días para estudiantes de enseñanza media, enfocado en desarrollar habilidades para el futuro mediante desafíos reales, talleres, empresas, tecnología y trabajo práctico." },
     { q: "¿Cuándo es?", a: "Del 14 al 18 de diciembre de 2026." },
     { q: "¿Quién puede postular?", a: "Estudiantes de enseñanza media que cumplan los requisitos de la convocatoria." },
-    { q: "¿Tiene costo?", a: "Sí. El bootcamp tiene un costo de $60.000 CLP, con opción de beca para quienes lo necesiten." },
+    { q: "¿Tiene costo?", a: "Sí. El bootcamp tiene un costo de $20.000 CLP, con opción de beca para quienes lo necesiten." },
     { q: "¿Necesito experiencia?", a: "No. The Builders Camp está diseñado precisamente para aprender, descubrir y desarrollar nuevas habilidades durante la experiencia." },
     { q: "¿Puedo postular con mis amigos?", a: "La postulación es individual. Los equipos se formarán buscando reunir perfiles e intereses diferentes." },
     { q: "¿Cómo se seleccionan los participantes?", a: "Queremos conocer quién eres más allá de tus notas. Nos interesan especialmente tu motivación, curiosidad, iniciativa, intereses y las ganas que tengas de aprovechar la experiencia." },
