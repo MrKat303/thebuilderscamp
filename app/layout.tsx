@@ -146,7 +146,7 @@ const structuredData = {
       offers: {
         "@type": "Offer",
         url: "https://www.thebuilderscamp.com/apply",
-        price: "60000",
+        price: "20000",
         priceCurrency: "CLP",
         availability: "https://schema.org/InStock",
       },
