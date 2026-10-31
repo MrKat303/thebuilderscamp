@@ -348,7 +348,7 @@ export default function Home() {
             fontSize: "clamp(0.88rem, 1.45vw, 1.05rem)", color: "rgba(255,255,255,0.95)",
             maxWidth: 850, lineHeight: 1.45,
           }}>
-            Un bootcamp intensivo de 5 días para desarrollar las habilidades que están definiendo el futuro.
+            Un bootcamp intensivo de 5 días para jóvenes de entre 14 y 18 años, diseñado para desarrollar las habilidades que están definiendo el futuro.
           </p>
         </div>
 

@@ -86,7 +86,6 @@ export default function ApplyPage() {
   const [hasLiderado, setHasLiderado] = useState<string>("");
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const [familySupport, setFamilySupport] = useState("");
-  const [attendance, setAttendance] = useState("");
   const [paymentCapacity, setPaymentCapacity] = useState("");
   const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
   const [formValues, setFormValues] = useState<Record<string, string>>({});
@@ -94,7 +93,7 @@ export default function ApplyPage() {
   const [submitError, setSubmitError] = useState("");
   const cardRef = useRef<HTMLDivElement>(null);
   
-  const totalSteps = 4;
+  const totalSteps = 3;
 
   const toggleArea = (area: string) => {
     setSelectedAreas(prev => 
@@ -135,12 +134,7 @@ export default function ApplyPage() {
   const nextStep = () => {
     if (step >= totalSteps) return;
 
-    if (step === 2 && (!hasLiderado || selectedAreas.length === 0 || !familySupport || !paymentCapacity || !attendance)) {
-      alert("Por favor, completa todas las preguntas obligatorias antes de continuar.");
-      return;
-    }
-
-    if (step === 3 && selectedTraits.length === 0) {
+    if (step === 2 && (!hasLiderado || selectedAreas.length === 0 || selectedTraits.length === 0 || !familySupport || !paymentCapacity)) {
       alert("Por favor, completa todas las preguntas obligatorias antes de continuar.");
       return;
     }
@@ -192,18 +186,13 @@ export default function ApplyPage() {
       gender: formValues.gender || "",
       tiempo_libre: formValues.tiempo_libre || "",
       future_interest: formValues.future_interest || "",
-      curiosity_topic: formValues.curiosity_topic || "",
       has_liderado: hasLiderado,
       actividades_desc: hasLiderado === "Sí" ? formValues.actividades_desc?.trim() || "" : "",
       family_support: familySupport,
-      attendance,
       payment_capacity: paymentCapacity,
       community_problem: formValues.community_problem || "",
       trait_other: selectedTraits.includes("Otro") ? formValues.trait_other || "" : "",
-      team_role: formValues.team_role || "",
-      admired_person: formValues.admired_person || "",
       ref_1: formValues.ref_1 || "",
-      ref_2: formValues.ref_2 || "",
       consent: "Acepto"
     });
 
@@ -290,8 +279,7 @@ export default function ApplyPage() {
   const stepTitles = [
     "1. Datos personales",
     "2. Intereses, experiencia y disponibilidad",
-    "3. Tu lado Builder",
-    "4. Reflexión"
+    "3. Reflexión"
   ];
 
   return (
@@ -530,18 +518,34 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="curiosity_topic" style={labelStyle}>¿Qué tema podría tenerte horas investigando, conversando o aprendiendo sin que nadie te lo pidiera? ¿Por qué? *</label>
-                      <textarea
-                        id="curiosity_topic"
-                        required
-                        value={formValues.curiosity_topic || ""}
-                        onChange={handleFieldChange}
-                        rows={3}
-                        placeholder="Cuéntanos qué tema despierta tu curiosidad y por qué..."
-                        style={{ ...inputStyle, resize: "vertical" }}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                      />
+                      <label htmlFor="community_problem" style={labelStyle}>Si pudieras resolver un problema de tu colegio, comunidad o entorno, ¿cuál elegirías y por qué? *</label>
+                      <textarea id="community_problem" required value={formValues.community_problem || ""} onChange={handleFieldChange} rows={3} placeholder="Describe el problema y por qué te importa..." style={{ ...inputStyle, resize: "vertical" }} onFocus={handleFocus} onBlur={handleBlur} />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>¿Con cuál de estas palabras te identificas más? Elige hasta 3. *</label>
+                      <div className="apply-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.7rem", marginTop: "0.5rem" }}>
+                        {["Curioso/a", "Creativo/a", "Analítico/a", "Líder", "Comunicador/a", "Inquieto/a", "Emprendedor/a", "Tecnológico/a", "Optimista", "Empático/a", "Soñador/a", "Otro"].map((trait) => (
+                          <button type="button" key={trait} aria-pressed={selectedTraits.includes(trait)} onClick={() => toggleTrait(trait)} style={{ display: "flex", alignItems: "center", textAlign: "left", width: "100%", gap: "0.6rem", cursor: selectedTraits.includes(trait) || selectedTraits.length < 3 ? "pointer" : "not-allowed", padding: "0.7rem 0.9rem", background: selectedTraits.includes(trait) ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", borderRadius: "10px", border: selectedTraits.includes(trait) ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent", color: "rgba(255,255,255,0.9)", fontFamily: "inherit", fontSize: "0.9rem", opacity: !selectedTraits.includes(trait) && selectedTraits.length >= 3 ? 0.45 : 1 }}>
+                            <input type="checkbox" checked={selectedTraits.includes(trait)} readOnly tabIndex={-1} aria-hidden="true" style={{ accentColor: c.orange, width: "16px", height: "16px", flexShrink: 0, pointerEvents: "none" }} />
+                            {trait}
+                          </button>
+                        ))}
+                      </div>
+                      {selectedTraits.includes("Otro") && (
+                        <input
+                          type="text"
+                          id="trait_other"
+                          required
+                          value={formValues.trait_other || ""}
+                          onChange={handleFieldChange}
+                          placeholder="Especifica otra palabra"
+                          style={{ ...inputStyle, marginTop: "0.75rem" }}
+                          onFocus={handleFocus}
+                          onBlur={handleBlur}
+                        />
+                      )}
+                      {selectedTraits.length >= 3 && <p style={{ color: "rgba(255,200,100,0.8)", fontSize: "0.8rem", marginTop: "0.5rem" }}>Máximo 3 palabras seleccionadas.</p>}
                     </div>
 
                     <div>
@@ -555,23 +559,6 @@ export default function ApplyPage() {
                         ].map(opt => (
                           <label key={opt} onClick={() => setFamilySupport(opt)} style={{ display: "flex", alignItems: "center", gap: "0.6rem", cursor: "pointer", padding: "0.7rem 1rem", background: familySupport === opt ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", borderRadius: "10px", border: familySupport === opt ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent", transition: "all 0.2s", color: "rgba(255,255,255,0.9)", fontSize: "0.9rem" }}>
                             <input type="radio" name="family" value={opt} checked={familySupport === opt} readOnly style={{ accentColor: c.orange, width: "16px", height: "16px", flexShrink: 0 }} />
-                            {opt}
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label style={labelStyle}>The Builders Camp se realizará presencialmente en Santiago del 14 al 18 de diciembre. En caso de ser seleccionado/a, ¿podrías participar durante los cinco días? *</label>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem", marginTop: "0.5rem" }}>
-                        {[
-                          "Sí, podría participar durante los cinco días sin inconvenientes.",
-                          "Sí, pero necesitaría apoyo para transporte y/o alojamiento.",
-                          "Probablemente sí, aunque todavía debo confirmar algunos detalles.",
-                          "No estoy seguro/a por el momento."
-                        ].map(opt => (
-                          <label key={opt} onClick={() => setAttendance(opt)} style={{ display: "flex", alignItems: "center", gap: "0.6rem", cursor: "pointer", padding: "0.7rem 1rem", background: attendance === opt ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", borderRadius: "10px", border: attendance === opt ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent", transition: "all 0.2s", color: "rgba(255,255,255,0.9)", fontSize: "0.9rem" }}>
-                            <input type="radio" name="attendance" value={opt} checked={attendance === opt} readOnly style={{ accentColor: c.orange, width: "16px", height: "16px", flexShrink: 0 }} />
                             {opt}
                           </label>
                         ))}
@@ -606,64 +593,12 @@ export default function ApplyPage() {
                   </div>
                 )}
 
-                {/* STEP 3: TU LADO BUILDER */}
+                {/* STEP 3: REFLEXION */}
                 {step === 3 && (
-                    <section style={{ display: "grid", gap: "1.8rem" }}>
-
-                      <div>
-                        <label htmlFor="community_problem" style={labelStyle}>Si pudieras resolver un problema de tu colegio, comunidad o entorno, ¿cuál elegirías y por qué? *</label>
-                        <textarea id="community_problem" required value={formValues.community_problem || ""} onChange={handleFieldChange} rows={3} placeholder="Describe el problema y por qué te importa..." style={{ ...inputStyle, resize: "vertical" }} onFocus={handleFocus} onBlur={handleBlur} />
-                      </div>
-
-                      <div>
-                        <label style={labelStyle}>¿Con cuál de estas palabras te identificas más? Elige hasta 3. *</label>
-                        <div className="apply-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.7rem", marginTop: "0.5rem" }}>
-                          {["Curioso/a", "Creativo/a", "Analítico/a", "Líder", "Comunicador/a", "Inquieto/a", "Emprendedor/a", "Tecnológico/a", "Optimista", "Empático/a", "Soñador/a", "Otro"].map((trait) => (
-                            <button type="button" key={trait} aria-pressed={selectedTraits.includes(trait)} onClick={() => toggleTrait(trait)} style={{ display: "flex", alignItems: "center", textAlign: "left", width: "100%", gap: "0.6rem", cursor: selectedTraits.includes(trait) || selectedTraits.length < 3 ? "pointer" : "not-allowed", padding: "0.7rem 0.9rem", background: selectedTraits.includes(trait) ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", borderRadius: "10px", border: selectedTraits.includes(trait) ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent", color: "rgba(255,255,255,0.9)", fontFamily: "inherit", fontSize: "0.9rem", opacity: !selectedTraits.includes(trait) && selectedTraits.length >= 3 ? 0.45 : 1 }}>
-                              <input type="checkbox" checked={selectedTraits.includes(trait)} readOnly tabIndex={-1} aria-hidden="true" style={{ accentColor: c.orange, width: "16px", height: "16px", flexShrink: 0, pointerEvents: "none" }} />
-                              {trait}
-                            </button>
-                          ))}
-                        </div>
-                        {selectedTraits.includes("Otro") && (
-                          <input
-                            type="text"
-                            id="trait_other"
-                            required
-                            value={formValues.trait_other || ""}
-                            onChange={handleFieldChange}
-                            placeholder="Especifica otra palabra"
-                            style={{ ...inputStyle, marginTop: "0.75rem" }}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                          />
-                        )}
-                        {selectedTraits.length >= 3 && <p style={{ color: "rgba(255,200,100,0.8)", fontSize: "0.8rem", marginTop: "0.5rem" }}>Máximo 3 palabras seleccionadas.</p>}
-                      </div>
-
-                      <div>
-                        <label htmlFor="team_role" style={labelStyle}>En un equipo, ¿qué rol tiendes a tomar? *</label>
-                        <textarea id="team_role" required value={formValues.team_role || ""} onChange={handleFieldChange} rows={3} placeholder="Cuéntanos qué rol sueles asumir y cómo aportas al equipo..." style={{ ...inputStyle, resize: "vertical" }} onFocus={handleFocus} onBlur={handleBlur} />
-                      </div>
-
-                      <div>
-                        <label htmlFor="admired_person" style={labelStyle}>¿Qué persona admiras y por qué? *</label>
-                        <textarea id="admired_person" required value={formValues.admired_person || ""} onChange={handleFieldChange} rows={3} placeholder="Puede ser una persona real o ficticia..." style={{ ...inputStyle, resize: "vertical" }} onFocus={handleFocus} onBlur={handleBlur} />
-                      </div>
-                    </section>
-                )}
-
-                {/* STEP 4: REFLEXION */}
-                {step === 4 && (
                   <div style={{ display: "grid", gap: "2rem" }}>
                     <div>
                       <label htmlFor="ref_1" style={labelStyle}>¿Por qué quieres ser parte de The Builders Camp? Cuéntanos en tus propias palabras. *</label>
                       <textarea id="ref_1" required value={formValues.ref_1 || ""} onChange={handleFieldChange} rows={4} placeholder="Tu motivación..." style={{ ...inputStyle, resize: "vertical" }} onFocus={handleFocus} onBlur={handleBlur}></textarea>
-                    </div>
-
-                    <div>
-                      <label htmlFor="ref_2" style={labelStyle}>¿Qué opinas sobre el rol de la inteligencia artificial en la sociedad? ¿Te genera entusiasmo, preocupación, o ambas cosas a la vez? *</label>
-                      <textarea id="ref_2" required value={formValues.ref_2 || ""} onChange={handleFieldChange} rows={4} placeholder="Escribe tu opinión honesta..." style={{ ...inputStyle, resize: "vertical" }} onFocus={handleFocus} onBlur={handleBlur}></textarea>
                     </div>
 
                     <label style={{
