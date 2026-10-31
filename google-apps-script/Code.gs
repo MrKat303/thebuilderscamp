@@ -15,17 +15,12 @@ const FIELDS = [
   { key: "actividades_desc", title: "Si respondiste que sí, cuéntanos brevemente qué hiciste", type: "paragraph", required: false },
   { key: "areas", title: "¿Cuál de estas áreas te interesa más explorar durante el bootcamp?", type: "checkbox", required: true, choices: ["Inteligencia artificial", "Emprendimiento e innovación", "Diseño de soluciones sociales", "Liderazgo y habilidades blandas", "Programación o desarrollo", "Comunicación y presentación de ideas", "No estoy seguro/a aún"] },
   { key: "future_interest", title: "¿Hay algún área, tema o profesión que hoy te interese explorar en el futuro?", type: "paragraph", required: true },
-  { key: "curiosity_topic", title: "¿Qué tema podría tenerte horas investigando, conversando o aprendiendo sin que nadie te lo pidiera? ¿Por qué?", type: "paragraph", required: true },
-  { key: "family_support", title: "¿Tu familia o adulto responsable sabe que estás postulando a The Builders Camp?", type: "multiple", required: true, choices: ["Sí, y apoya mi participación.", "Sí, pero todavía tenemos que conversar algunos detalles.", "Aún no les he contado sobre mi postulación.", "Prefiero conversarlo con ellos si avanzo en el proceso."] },
-  { key: "attendance", title: "¿Podrías participar presencialmente durante los cinco días, del 14 al 18 de diciembre?", type: "multiple", required: true, choices: ["Sí, podría participar durante los cinco días sin inconvenientes.", "Sí, pero necesitaría apoyo para transporte y/o alojamiento.", "Probablemente sí, aunque todavía debo confirmar algunos detalles.", "No estoy seguro/a por el momento."] },
-  { key: "payment_capacity", title: "¿Cuál de estas opciones describe mejor tu situación respecto al costo de participación de $20.000?", type: "multiple", required: true, choices: ["Podría cubrir el costo total de $20.000.", "Podría cubrir una parte del costo.", "Necesitaría una beca para poder participar."] },
   { key: "community_problem", title: "Si pudieras resolver un problema de tu colegio, comunidad o entorno, ¿cuál elegirías y por qué?", type: "paragraph", required: true },
   { key: "traits", title: "¿Con cuál de estas palabras te identificas más?", type: "checkbox", required: true, choices: ["Curioso/a", "Creativo/a", "Analítico/a", "Líder", "Comunicador/a", "Inquieto/a", "Emprendedor/a", "Tecnológico/a", "Optimista", "Empático/a", "Soñador/a", "Otro"] },
   { key: "trait_other", title: "Otra palabra con la que te identificas", type: "text", required: false },
-  { key: "team_role", title: "En un equipo, ¿qué rol tiendes a tomar?", type: "paragraph", required: true },
-  { key: "admired_person", title: "¿Qué persona admiras y por qué?", type: "paragraph", required: true },
+  { key: "family_support", title: "¿Tu familia o adulto responsable sabe que estás postulando a The Builders Camp?", type: "multiple", required: true, choices: ["Sí, y apoya mi participación.", "Sí, pero todavía tenemos que conversar algunos detalles.", "Aún no les he contado sobre mi postulación.", "Prefiero conversarlo con ellos si avanzo en el proceso."] },
+  { key: "payment_capacity", title: "¿Cuál de estas opciones describe mejor tu situación respecto al costo de participación de $20.000?", type: "multiple", required: true, choices: ["Podría cubrir el costo total de $20.000.", "Podría cubrir una parte del costo.", "Necesitaría una beca para poder participar."] },
   { key: "ref_1", title: "¿Por qué quieres ser parte de The Builders Camp?", type: "paragraph", required: true },
-  { key: "ref_2", title: "¿Qué opinas sobre el rol de la inteligencia artificial en la sociedad?", type: "paragraph", required: true },
   { key: "consent", title: "Consentimiento para el tratamiento de datos", type: "checkbox", required: true, choices: ["Acepto"] }
 ];
 
@@ -48,13 +43,10 @@ function setupForm() {
   for (let index = 0; index <= 8; index++) addField_(form, FIELDS[index]);
 
   form.addPageBreakItem().setTitle("2. Intereses, experiencia y disponibilidad");
-  for (let index = 9; index <= 17; index++) addField_(form, FIELDS[index]);
+  for (let index = 9; index <= 18; index++) addField_(form, FIELDS[index]);
 
-  form.addPageBreakItem().setTitle("3. Tu lado Builder");
-  for (let index = 18; index <= 22; index++) addField_(form, FIELDS[index]);
-
-  form.addPageBreakItem().setTitle("4. Reflexión");
-  for (let index = 23; index <= 25; index++) addField_(form, FIELDS[index]);
+  form.addPageBreakItem().setTitle("3. Reflexión");
+  for (let index = 19; index <= 20; index++) addField_(form, FIELDS[index]);
 
   const spreadsheet = SpreadsheetApp.create("Respuestas - " + FORM_NAME);
   form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadsheet.getId());
