@@ -488,7 +488,7 @@ export default function ApplyPage() {
 
                     <div>
                       <label style={labelStyle}>¿Cuál de estas áreas te interesa más explorar durante el bootcamp? Elige hasta 2. *</label>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.7rem", marginTop: "0.5rem" }}>
+                      <div className="apply-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.7rem", marginTop: "0.5rem" }}>
                         {["Inteligencia artificial", "Emprendimiento e innovación", "Diseño de soluciones sociales", "Liderazgo y habilidades blandas", "Programación o desarrollo", "Comunicación y presentación de ideas", "No estoy seguro/a aún"].map(area => (
                           <button type="button" key={area} aria-pressed={selectedAreas.includes(area)} onClick={() => toggleArea(area)} style={{ display: "flex", alignItems: "center", textAlign: "left", width: "100%", gap: "0.6rem", cursor: selectedAreas.includes(area) || selectedAreas.length < 2 ? "pointer" : "not-allowed", padding: "0.65rem 0.9rem", background: selectedAreas.includes(area) ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", borderRadius: "10px", border: selectedAreas.includes(area) ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent", transition: "all 0.2s", color: "rgba(255,255,255,0.9)", fontFamily: "inherit", fontSize: "0.9rem", opacity: !selectedAreas.includes(area) && selectedAreas.length >= 2 ? 0.4 : 1 }}>
                             <input type="checkbox" checked={selectedAreas.includes(area)} readOnly tabIndex={-1} aria-hidden="true" style={{ accentColor: c.orange, width: "16px", height: "16px", flexShrink: 0, pointerEvents: "none" }} />
