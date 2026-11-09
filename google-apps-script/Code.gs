@@ -1,4 +1,7 @@
 const FORM_NAME = "Postulación The Builders Camp 2026";
+const OBSOLETE_FIELD_TITLES = [
+  "¿Cuál de estas opciones describe mejor tu situación respecto al costo de participación de $20.000?"
+];
 
 const FIELDS = [
   { key: "name", title: "Nombre completo", type: "text", required: true },
@@ -19,7 +22,6 @@ const FIELDS = [
   { key: "traits", title: "¿Con cuál de estas palabras te identificas más?", type: "checkbox", required: true, choices: ["Curioso/a", "Creativo/a", "Analítico/a", "Líder", "Comunicador/a", "Inquieto/a", "Emprendedor/a", "Tecnológico/a", "Optimista", "Empático/a", "Soñador/a", "Otro"] },
   { key: "trait_other", title: "Otra palabra con la que te identificas", type: "text", required: false },
   { key: "family_support", title: "¿Tu familia o adulto responsable sabe que estás postulando a The Builders Camp?", type: "multiple", required: true, choices: ["Sí, y apoya mi participación.", "Sí, pero todavía tenemos que conversar algunos detalles.", "Aún no les he contado sobre mi postulación.", "Prefiero conversarlo con ellos si avanzo en el proceso."] },
-  { key: "payment_capacity", title: "¿Cuál de estas opciones describe mejor tu situación respecto al costo de participación de $20.000?", type: "multiple", required: true, choices: ["Podría cubrir el costo total de $20.000.", "Podría cubrir una parte del costo.", "Necesitaría una beca para poder participar."] },
   { key: "ref_1", title: "¿Por qué quieres ser parte de The Builders Camp?", type: "paragraph", required: true },
   { key: "consent", title: "Consentimiento para el tratamiento de datos", type: "checkbox", required: true, choices: ["Acepto"] }
 ];
@@ -29,6 +31,7 @@ function setupForm() {
   const existingId = properties.getProperty("FORM_ID");
   if (existingId) {
     const existingForm = FormApp.openById(existingId);
+    removeObsoleteFields_(existingForm);
     console.log(JSON.stringify(getSetupInfo_(existingForm)));
     return;
   }
@@ -43,10 +46,10 @@ function setupForm() {
   for (let index = 0; index <= 8; index++) addField_(form, FIELDS[index]);
 
   form.addPageBreakItem().setTitle("2. Intereses, experiencia y disponibilidad");
-  for (let index = 9; index <= 18; index++) addField_(form, FIELDS[index]);
+  for (let index = 9; index <= 17; index++) addField_(form, FIELDS[index]);
 
   form.addPageBreakItem().setTitle("3. Reflexión");
-  for (let index = 19; index <= 20; index++) addField_(form, FIELDS[index]);
+  for (let index = 18; index <= 19; index++) addField_(form, FIELDS[index]);
 
   const spreadsheet = SpreadsheetApp.create("Respuestas - " + FORM_NAME);
   form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadsheet.getId());
@@ -66,6 +69,15 @@ function addField_(form, field) {
   if (field.type === "multiple") item = form.addMultipleChoiceItem().setChoiceValues(field.choices);
   if (field.type === "checkbox") item = form.addCheckboxItem().setChoiceValues(field.choices);
   item.setTitle(field.title).setRequired(field.required);
+}
+
+function removeObsoleteFields_(form) {
+  const items = form.getItems();
+  for (let index = items.length - 1; index >= 0; index--) {
+    if (OBSOLETE_FIELD_TITLES.indexOf(items[index].getTitle()) !== -1) {
+      form.deleteItem(items[index]);
+    }
+  }
 }
 
 function doGet() {
@@ -88,6 +100,7 @@ function doPost(e) {
     }
 
     const form = FormApp.openById(properties.getProperty("FORM_ID"));
+    removeObsoleteFields_(form);
     const itemsByTitle = {};
     form.getItems().forEach(item => itemsByTitle[item.getTitle()] = item);
     const response = form.createResponse();

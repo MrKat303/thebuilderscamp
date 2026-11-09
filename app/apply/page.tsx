@@ -86,7 +86,6 @@ export default function ApplyPage() {
   const [hasLiderado, setHasLiderado] = useState<string>("");
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const [familySupport, setFamilySupport] = useState("");
-  const [paymentCapacity, setPaymentCapacity] = useState("");
   const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
   const [formValues, setFormValues] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -134,7 +133,7 @@ export default function ApplyPage() {
   const nextStep = () => {
     if (step >= totalSteps) return;
 
-    if (step === 2 && (!hasLiderado || selectedAreas.length === 0 || selectedTraits.length === 0 || !familySupport || !paymentCapacity)) {
+    if (step === 2 && (!hasLiderado || selectedAreas.length === 0 || selectedTraits.length === 0 || !familySupport)) {
       alert("Por favor, completa todas las preguntas obligatorias antes de continuar.");
       return;
     }
@@ -189,7 +188,6 @@ export default function ApplyPage() {
       has_liderado: hasLiderado,
       actividades_desc: hasLiderado === "Sí" ? formValues.actividades_desc?.trim() || "" : "",
       family_support: familySupport,
-      payment_capacity: paymentCapacity,
       community_problem: formValues.community_problem || "",
       trait_other: selectedTraits.includes("Otro") ? formValues.trait_other || "" : "",
       ref_1: formValues.ref_1 || "",
@@ -206,10 +204,17 @@ export default function ApplyPage() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString(),
       });
-      if (!response.ok) throw new Error("No fue posible registrar la postulación");
+      const result = await response.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "El servidor no pudo registrar la postulación.");
+      }
       setSubmitted(true);
-    } catch {
-      setSubmitError("No pudimos enviar tu postulación. Revisa tu conexión e inténtalo nuevamente.");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message !== "Failed to fetch"
+          ? error.message
+          : "No pudimos comunicarnos con el servicio de postulaciones. Inténtalo nuevamente en unos minutos."
+      );
       setIsSubmitting(false);
       return;
     }
@@ -565,31 +570,6 @@ export default function ApplyPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <label style={labelStyle}>The Builders Camp tiene un costo de participación de $20.000. En caso de ser seleccionado/a, ¿cuál de estas opciones describe mejor tu situación? *</label>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem", marginTop: "0.5rem" }}>
-                        {[
-                          "Podría cubrir el costo total de $20.000.",
-                          "Podría cubrir una parte del costo.",
-                          "Necesitaría una beca para poder participar.",
-                        ].map((option) => (
-                          <label key={option} style={{ display: "flex", alignItems: "flex-start", gap: "0.7rem", cursor: "pointer", padding: "0.8rem 1rem", background: paymentCapacity === option ? "rgba(139, 92, 246, 0.2)" : "rgba(0,0,0,0.2)", borderRadius: "10px", border: paymentCapacity === option ? "1px solid rgba(139, 92, 246, 0.5)" : "1px solid transparent", transition: "all 0.2s", color: "rgba(255,255,255,0.9)", fontSize: "0.9rem", lineHeight: 1.45 }}>
-                            <input
-                              type="radio"
-                              name="paymentCapacity"
-                              value={option}
-                              checked={paymentCapacity === option}
-                              onChange={(event) => setPaymentCapacity(event.target.value)}
-                              style={{ accentColor: c.orange, width: "17px", height: "17px", marginTop: "2px", flexShrink: 0 }}
-                            />
-                            {option}
-                          </label>
-                        ))}
-                      </div>
-                      <p style={{ margin: "0.75rem 0 0", color: "rgba(255,255,255,0.62)", fontSize: "0.82rem", lineHeight: 1.5 }}>
-                        Tu respuesta no influirá en el proceso de selección. Esta información nos permitirá conocer las necesidades de apoyo de quienes postulan.
-                      </p>
-                    </div>
                   </div>
                 )}
 
