@@ -28,13 +28,26 @@ export async function POST(request: Request) {
       return Response.json({ error: "Google Apps Script rechazó el envío." }, { status: 502 });
     }
 
-    const result = await scriptResponse.json();
+    const responseText = await scriptResponse.text();
+    let result: { ok?: boolean; error?: string; responseId?: string };
+
+    try {
+      result = JSON.parse(responseText) as { ok?: boolean; error?: string; responseId?: string };
+    } catch {
+      console.error("Google Apps Script devolvió una respuesta inválida.", {
+        status: scriptResponse.status,
+        responsePreview: responseText.slice(0, 200),
+      });
+      return Response.json({ error: "El servicio de postulaciones devolvió una respuesta inválida." }, { status: 502 });
+    }
+
     if (!result.ok) {
       return Response.json({ error: result.error || "No fue posible guardar la postulación." }, { status: 502 });
     }
 
     return Response.json({ ok: true, responseId: result.responseId });
-  } catch {
-    return Response.json({ error: "No fue posible procesar la postulación." }, { status: 500 });
+  } catch (error) {
+    console.error("Error al procesar la postulación.", error);
+    return Response.json({ error: "No fue posible comunicarse con el servicio de postulaciones." }, { status: 502 });
   }
 }
