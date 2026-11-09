@@ -94,6 +94,9 @@ function doPost(e) {
     const properties = PropertiesService.getScriptProperties();
     const data = parseRequest_(e);
 
+    // Keep diagnostics useful without logging or returning the integration token.
+    console.log("doPost received keys:", Object.keys(data || {}).join(","));
+
     if (!properties.getProperty("FORM_ID")) throw new Error("El formulario aún no está configurado.");
     if (!data.token || data.token !== properties.getProperty("INTEGRATION_TOKEN")) {
       return json_({ ok: false, error: "No autorizado." });
