@@ -8,33 +8,35 @@ import { useGSAP } from "@gsap/react";
 
 const mobileStyles = `
   .apply-start-btn {
-    min-width: 148px;
-    min-height: 42px;
-    margin-top: 2rem;
-    padding: 0.62rem 1.25rem;
-    border: 0.75px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.12);
+    min-width: 190px;
+    min-height: 52px;
+    margin-top: 2.2rem;
+    padding: 0.9rem 2.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
     color: #fff;
     backdrop-filter: blur(18px) saturate(135%);
     -webkit-backdrop-filter: blur(18px) saturate(135%);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 28px rgba(76, 29, 149, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.22);
     font-family: var(--font-sans);
-    font-size: 0.92rem;
-    font-weight: 500;
-    letter-spacing: -0.015em;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
     line-height: 1;
     cursor: pointer;
-    transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease, border-color 180ms ease;
     -webkit-tap-highlight-color: transparent;
   }
   .apply-start-btn:hover {
-    background: rgba(255, 255, 255, 0.17);
-    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 16px 34px rgba(76, 29, 149, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
   .apply-start-btn:active {
-    transform: scale(0.97);
-    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(0) scale(0.98);
+    filter: brightness(0.98);
   }
   .apply-start-btn:focus-visible {
     outline: 3px solid rgba(255, 255, 255, 0.72);
@@ -45,14 +47,52 @@ const mobileStyles = `
       grid-template-columns: 1fr !important;
     }
     .apply-main {
-      padding: 100px 1rem 60px !important;
+      padding: 88px 0.75rem 48px !important;
     }
     .apply-card {
-      padding: 1.5rem 1.2rem !important;
+      padding: 1.25rem 1rem !important;
       border-radius: 18px !important;
     }
+    .form-header {
+      margin-bottom: 1.5rem !important;
+    }
     .apply-title {
-      font-size: 2rem !important;
+      font-size: 1.65rem !important;
+      margin-bottom: 0.45rem !important;
+    }
+    .apply-subtitle {
+      max-width: 290px;
+      margin-inline: auto;
+      font-size: 0.86rem !important;
+      line-height: 1.42 !important;
+    }
+    .apply-intro {
+      padding: 0.25rem 0 1rem !important;
+    }
+    .apply-intro-icon {
+      width: 54px !important;
+      height: 54px !important;
+      margin-bottom: 1rem !important;
+    }
+    .apply-intro-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    .apply-intro-title {
+      font-size: 1.35rem !important;
+      margin-bottom: 1.05rem !important;
+    }
+    .apply-intro-copy {
+      gap: 0.9rem !important;
+      font-size: 0.88rem !important;
+      line-height: 1.48 !important;
+    }
+    .apply-start-btn {
+      width: min(100%, 220px);
+      min-height: 52px;
+      margin-top: 1.5rem;
+      padding: 0.9rem 1.5rem;
+      font-size: 0.92rem;
     }
     .apply-h2 {
       font-size: 1.2rem !important;
@@ -311,7 +351,7 @@ export default function ApplyPage() {
       <main className="apply-main" style={{ padding: "120px 1.5rem 80px", maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div className="form-header" style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <h1 className="apply-title" style={{ fontSize: "2.8rem", color: c.white, marginBottom: "0.75rem", lineHeight: 1.1, fontWeight: 400 }}>Únete ahora</h1>
-          <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "1.1rem", fontWeight: 500, marginBottom: "0.5rem" }}>Buscamos a los futuros builders, líderes y founders de Chile.</p>
+          <p className="apply-subtitle" style={{ color: "rgba(255,255,255,0.85)", fontSize: "1.1rem", fontWeight: 500, marginBottom: "0.5rem" }}>Buscamos a los futuros builders, líderes y founders de Chile.</p>
         </div>
 
         <div className="apply-card form-card" style={{ 
@@ -344,13 +384,13 @@ export default function ApplyPage() {
                 
                 {/* STEP 0: INTRO */}
                 {step === 0 && (
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "1rem 0 2rem" }}>
-                    <div style={{ width: "70px", height: "70px", borderRadius: "50%", background: "rgba(139, 92, 246, 0.15)", border: "1px solid rgba(139, 92, 246, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", color: c.orange }}>
+                  <div className="apply-intro" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "1rem 0 2rem" }}>
+                    <div className="apply-intro-icon" style={{ width: "70px", height: "70px", borderRadius: "50%", background: "rgba(139, 92, 246, 0.15)", border: "1px solid rgba(139, 92, 246, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", color: c.orange }}>
                       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                     </div>
-                    <h2 style={{ fontSize: "2rem", color: c.white, marginBottom: "1.5rem", fontWeight: 600 }}>Antes de comenzar</h2>
+                    <h2 className="apply-intro-title" style={{ fontSize: "2rem", color: c.white, marginBottom: "1.5rem", fontWeight: 600 }}>Antes de comenzar</h2>
                     
-                    <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem", color: "rgba(255,255,255,0.85)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto" }}>
+                    <div className="apply-intro-copy" style={{ display: "flex", flexDirection: "column", gap: "1.2rem", color: "rgba(255,255,255,0.85)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto" }}>
                       <p>Este cuestionario es parte del proceso de selección del bootcamp <strong>The Builders Camp</strong>.</p>
                       <p>No hay respuestas correctas ni incorrectas. Queremos conocerte tal como eres: tu forma de pensar, tus intereses y cómo enfrentas los desafíos.</p>
                       <p>Los postulantes seleccionados serán contactados directamente por WhatsApp con los próximos pasos.</p>
